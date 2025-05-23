@@ -1,0 +1,77 @@
+@use './../../../styles/variables';
+@use './../../../styles/animations' as *;
+@use './../../../styles/mixins' as *;
+
+.container {
+    @include container;
+    position: relative;
+    
+    .login_form {
+        @include fade-in(2s, ease, 3s);
+        @include card;
+        padding: 40px;
+        width: 40%;
+        padding-top: 120px;
+
+        .text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px 0;
+
+            
+
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .input_field {
+                @include input_field;
+                margin-bottom: 20px;
+                .icon {
+                    @include icon (before);
+                }
+                
+                .icon_after {
+                    @include icon (after);
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+            }
+            
+            .notValid {
+                border: 2px solid $red !important;
+                ~ svg {
+                    fill: $red;
+                }
+            }
+            
+            button {
+                @include primary_button ('normal');
+                width: 80%;
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .fade-out {
+        @include fade-out;
+    }
+
+    img.fade-out {
+        @include fade-out;
+        width: 80px;
+        top: 10rem;
+    }
+
+    img {
+        position: absolute;
+        z-index: 1;
+        width: 250px;
+        animation: fade_in 2s ease 0s forwards, float 1.5s ease 3s forwards;
+    }
+}
+

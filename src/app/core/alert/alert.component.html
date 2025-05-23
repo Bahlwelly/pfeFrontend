@@ -1,0 +1,33 @@
+@if (visisble) {
+    <div class="alert-box" [ngClass]="{'flying_out': flying_out}">
+        <div class="title">
+            <div class="alert-icon">
+                @if (type == 'error') {
+                    <img src="./../../../assets/svg/error.svg">
+                }
+    
+                @if (type == 'info') {
+                    <img src="./../../../assets/svg/info.svg">
+                }
+    
+                @if (type == 'success') {
+                    <img src="./../../../assets/svg/success.svg">
+                }
+            </div>
+            <h3 [ngStyle]="{'color': type=='error' ? '#ee0000' : type == 'success' ? '#00ee00' : '#3BBAC4'}">{{ title }}</h3>
+        </div>
+        
+        <p> {{ message }} </p>
+
+        @if (closable) {
+            <span (click)="close()"> &times; </span>
+        }
+
+        @if (confirmation) {
+            <div class="buttons">
+                <button (click)="close()"> Anuller </button>
+                <button (click)="onConfirm()"> Confirmer </button>
+            </div>
+        }
+    </div>
+}

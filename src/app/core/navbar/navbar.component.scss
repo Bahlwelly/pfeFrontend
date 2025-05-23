@@ -1,0 +1,60 @@
+@use './../../../styles/variables';
+@use './../../../styles/animations';
+@use './../../../styles/mixins' as *;
+
+.container {
+    @include container;
+    flex-direction: column;
+    justify-content: start;
+    position: relative;
+    gap: 30px;
+    height: 100%;
+
+    img {
+        width: 70px;
+        margin-top: 30px;
+    }
+
+    ul {
+        height: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 100%;
+        position: relative;
+        li {
+            display: flex;
+            align-items: start;
+            gap: 6px;
+            width: 100%;
+            padding: 15px 0;
+            padding-left: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+
+            &:last-child {
+                position: absolute;
+                bottom: -310px;
+                left: auto;
+                align-items: center;
+                padding-left: 75px;
+                &:hover {
+                    background: $red;
+                    fill: $white;
+                    color: $white;
+                }
+            }
+
+            &:hover {
+                background-color: $grey;
+            }
+        }
+
+        .selected {
+            color: $white;
+            fill: $white;
+            background-color: $dark_blue !important;
+        }
+    }
+}

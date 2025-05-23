@@ -1,0 +1,106 @@
+<div class="container">
+    <ng-container #alert></ng-container>
+    <!-- ============================HEADER START======================================== -->
+    <div class="header">
+        <h2> <span routerLink="/home/users">&lt;</span>List Noir</h2>
+        
+        <!-- ============================SEARCH FIELD START======================================== -->
+        <div class="search">
+            <input [(ngModel)]="query" type="text" placeholder="Chercher {{ getSearchLabel(searchField) }}" (input)="filterUsers()" (focus)="showOptions = false">
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><g fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path d="M10.5 4a6.5 6.5 0 1 0 0 13a6.5 6.5 0 0 0 0-13M2 10.5a8.5 8.5 0 1 1 15.176 5.262l3.652 3.652a1 1 0 0 1-1.414 1.414l-3.652-3.652A8.5 8.5 0 0 1 2 10.5M9.5 7a1 1 0 0 1 1-1a4.5 4.5 0 0 1 4.5 4.5a1 1 0 1 1-2 0A2.5 2.5 0 0 0 10.5 8a1 1 0 0 1-1-1"/></g></svg>
+
+            <span (click)="toggleOptions()">&#8964;</span>
+
+            @if (showOptions) {
+                <ul>
+                    @for (field of searchFields; track $index) {
+                        <li (click)="selectField(field)"> {{ getSearchLabel(field) }} </li>
+                    }
+                </ul>
+            }
+
+        </div>
+        <!-- ============================SEARCH FIELD END======================================== -->
+        
+    </div>
+    <!-- ============================HEADER END======================================== -->
+    
+
+    <!-- ============================OPTIONS START======================================== -->
+    <div class="options">
+
+        <div class="leftside">
+            <!-- FILTER TABLE OPTION =======> -->
+            <div class="option">
+                <!-- THE FILTER METHODE SELECTION ========> -->
+                <select (change)="onSortChange($event)" name="filter" id="filter">
+                    @for (option of filterOptions; track option) {
+                        <option [selected]="option === 'Plus récent'" value="{{option}}">{{ option }}</option>
+                    }
+                </select>
+                
+                <!-- SETTINGS ICON =========> -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M22 18.605a.75.75 0 0 1-.75.75h-5.1a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h7.74a2.93 2.93 0 0 1 5.66 0h5.1a.75.75 0 0 1 .75.75m0-13.21a.75.75 0 0 1-.75.75H18.8a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h10.39a2.93 2.93 0 0 1 5.66 0h2.45a.74.74 0 0 1 .75.75m0 6.6a.74.74 0 0 1-.75.75H9.55a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h1.14a2.93 2.93 0 0 1 5.66 0h11.7a.75.75 0 0 1 .75.75"/></svg>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button class="navArrows" (click)="changePange(currentPage - 1)" [disabled]="currentPage === 1">&lt;</button>
+            @for (page of pages; track $index) {
+                <button [class.selected]="currentPage === page" class="navButtons" (click)="changePange(page)">
+                    {{page}}
+                </button>
+            }
+            <button class="navArrows" (click)="changePange(currentPage + 1)" [disabled]="currentPage === pages.length">&gt;</button>
+        </div>
+
+    </div>
+    <!-- ============================OPTIONS END======================================== -->
+
+
+    <!-- =================================USERS TABLE START===================================== -->
+
+    <table>
+        <tr class="thead">
+            <td>ID</td>
+            <td>Nom</td>
+            <td>NNI</td>
+            <td>Telephone</td>
+            <td>Options</td>
+        </tr>
+        
+        @for (user of paginatedUsers; track $index) {
+            <tr>
+                <td>US-{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.nni }}</td>
+                <td>{{ user.tel }}</td>
+
+                <td class="options">
+                    <!-- DELETE USER OPTION ======> -->
+                    <button (click)="delete(user.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
+                            <path d="M20.725 5.275h-4.69v-.89a2.4 2.4 0 0 0-.7-1.68a2.38 2.38 0 0 0-1.69-.7h-3.26a2.38 2.38 0 0 0-1.69.7a2.4 2.4 0 0 0-.69 1.68v.89h-4.69a.75.75 0 1 0 0 1.5h1.42v11.76a3.45 3.45 0 0 0 1 2.46a3.5 3.5 0 0 0 2.45 1h7.62a3.5 3.5 0 0 0 2.45-1a3.45 3.45 0 0 0 1-2.46V6.775h1.43a.75.75 0 0 0 0-1.5zm-11.2-.89a.87.87 0 0 1 .26-.62a.9.9 0 0 1 .62-.26h3.26a.88.88 0 0 1 .63.26a.9.9 0 0 1 .26.62v.89h-5zm1.33 12.61a1 1 0 1 1-2 0v-5.43a1 1 0 0 1 2 0zm4.36 0a1 1 0 0 1-2 0v-5.43a1 1 0 0 1 2 0z"/>
+                        </svg>
+                    </button>
+
+                    <!-- RESTORE OPTION =====> -->
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path d="M11.77 3c-2.65.07-5 1.28-6.6 3.16L3.85 4.85a.5.5 0 0 0-.85.36V9.5c0 .28.22.5.5.5h4.29c.45 0 .67-.54.35-.85L6.59 7.59C7.88 6.02 9.82 5 12 5c4.32 0 7.74 3.94 6.86 8.41c-.54 2.77-2.81 4.98-5.58 5.47c-3.8.68-7.18-1.74-8.05-5.16c-.12-.42-.52-.72-.96-.72c-.65 0-1.14.61-.98 1.23C4.28 18.12 7.8 21 12 21c5.06 0 9.14-4.17 9-9.26c-.14-4.88-4.35-8.86-9.23-8.74M14 12c0-1.1-.9-2-2-2s-2 .9-2 2s.9 2 2 2s2-.9 2-2"/></svg>
+                    </button>
+
+
+                    <!-- DETAILS OPTION =======> -->
+                    <button (click)="details(user.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+                            <path d="M12 17q.425 0 .713-.288T13 16v-4q0-.425-.288-.712T12 11t-.712.288T11 12v4q0 .425.288.713T12 17m0-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22"/>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <!-- =================================USERS TABLE END===================================== -->
+</div>

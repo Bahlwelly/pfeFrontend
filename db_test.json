@@ -1,0 +1,246 @@
+{
+  "users": [
+    {
+      "id": "US1",
+      "nom": "Lmoukhtar Lmoutapha",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US4",
+      "nom": "Aminou Ba",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US7",
+      "nom": "Ahmed Moulay",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US9",
+      "nom": "Sidi Mouhammed Bezeid",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US10",
+      "nom": "Aminata sar",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US11",
+      "nom": "Fatimetou Yahya",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CITOYEN"
+    },
+    {
+      "id": "US12",
+      "nom": "Moulay zeyn",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CITOYEN"
+    },
+    {
+      "id": "US13",
+      "nom": "Mouhammed Salem Sid'Ahmed",
+      "nni": 1234567890,
+      "tel": "22 88 44 24",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US15",
+      "nom": "Alyoun Sow",
+      "nni": 2111806013,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US18",
+      "nom": "Koumba Sar",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US19",
+      "nom": "Lemin Himallah",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US22",
+      "nom": "Mohammed Sidi Bezeyd",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 0,
+      "role": "CHEF"
+    },
+    {
+      "id": "US6",
+      "nom": "Mbarek Bidih",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 2,
+      "role": "CITOYEN"
+    }
+  ],
+  "liste_noire": [
+    {
+      "id": "US16",
+      "nom": "Sidi Ali Mohammed Lemin",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 3,
+      "role": "CITOYEN"
+    },
+    {
+      "id": "US21",
+      "nom": "Astou Diallo",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 3,
+      "role": "CITOYEN"
+    },
+    {
+      "id": "US23",
+      "nom": "Aminetou Ahmed Salem",
+      "nni": 1234567890,
+      "tel": "36 95 67 61",
+      "signal": 2,
+      "role": "CITOYEN"
+    }
+  ],
+  "plaintes": [
+    {
+      "id": "PL1",
+      "id_citoyen": "US3",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.0783,
+        "longitude": -15.9744
+      },
+      "image": "",
+      "examine": "pas examinee"
+    },
+    {
+      "id": "PL2",
+      "id_citoyen": "US20",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.3092,
+        "longitude": -15.9697
+      },
+      "image": "",
+      "examine": "pas examinee"
+    },
+    {
+      "id": "PL3",
+      "id_citoyen": "US21",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.0112,
+        "longitude": -16.0065
+      },
+      "image": "",
+      "examine": "examinee"
+    },
+    {
+      "id": "PL4",
+      "id_citoyen": "US6",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.1043,
+        "longitude": -15.9434
+      },
+      "image": "",
+      "examine": "examinee"
+    },
+    {
+      "id": "PL5",
+      "id_citoyen": "US21",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.0986,
+        "longitude": -15.9784
+      },
+      "image": "",
+      "examine": "examinee"
+    },
+    {
+      "id": "PL6",
+      "id_citoyen": "US6",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.0864,
+        "longitude": -15.9971
+      },
+      "image": "",
+      "examine": "pas examinee"
+    },
+    {
+      "id": "PL7",
+      "id_citoyen": "US20",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.0512,
+        "longitude": -16.0154
+      },
+      "image": "",
+      "examine": "examinee"
+    },
+    {
+      "id": "PL8",
+      "id_citoyen": "US23",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.0287,
+        "longitude": -15.9962
+      },
+      "image": "",
+      "examine": "examinee"
+    },
+    {
+      "id": "PL9",
+      "id_citoyen": "US12",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.0002,
+        "longitude": -16.0477
+      },
+      "image": "",
+      "examine": "pas examinee"
+    },
+    {
+      "id": "PL10",
+      "id_cityoen": "US11",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est at dolor non itaque deserunt laudantium harum ad veniam provident nobis.",
+      "localisation": {
+        "latitude": 18.1228,
+        "longitude": -15.9243
+      },
+      "image": "",
+      "examine": "examinee"
+    }
+  ]
+}

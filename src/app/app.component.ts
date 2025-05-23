@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { AlertComponent } from "./core/alert/alert.component";
+import { LoadingComponent } from "./core/loading/loading.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, AlertComponent, LoadingComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'pfe_admin_dashboarda';
+
+  
 }

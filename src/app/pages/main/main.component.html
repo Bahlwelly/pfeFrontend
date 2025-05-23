@@ -1,0 +1,10 @@
+<div class="home">
+    <app-loading />
+    <app-navbar (logout)="confirmLogout()" class="navbar"></app-navbar>
+    <div class="main-page">
+        <div class="content">
+            <ng-container #alert></ng-container>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
