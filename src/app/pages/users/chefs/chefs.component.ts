@@ -183,48 +183,6 @@ currentDisplayPage : string = 'chefs'
     }
   }
 
-
-  // ======THE DELETE METHODE===========>
-  delete (id : string) {
-    this.showAlert('etes-vous sur',
-      'Voulez-vous vraiment supprimer cet utilisateur',
-      "info",
-      false,
-      false,
-      true,
-      () => {
-        this.userService.deleteUser(id).subscribe({
-          next : () => {
-              setTimeout ( () => {
-                location.reload();
-              }, 2000 );
-              this.showAlert('Success',
-                "L'utilisateur ete supprimer avec succes",
-                'success',
-                false,
-                true,
-                false              
-              );
-
-            },
-            
-            error : () => {
-              this.showAlert('Error',
-                "Une erreur s'est produite. Veuillez esseyer encore",
-                'error',
-                false,
-                true,
-                false              
-              );
-
-            }
-        })
-      }
-    )
-  }
-
-
-
   //======SIGNAL METHODE=============>
   signal(user: User, currentCount: number) {
     if (currentCount < 2) {
@@ -271,10 +229,24 @@ currentDisplayPage : string = 'chefs'
         () => {
           this.userService.signal(user.id, currentCount + 1).subscribe({
             next: () => {
-              this.block(user);
+              this.showAlert(
+                'Success',
+                'Utilisateur blocke avec success.',
+                'success',
+                true,
+                true,
+                false
+              );
             },
             error: (err) => {
-              console.log(`Something went wrong while signaling before blocking: ${err}`);
+              this.showAlert(
+                'Erreur',
+                "Un errur est produit.",
+                'error',
+                true,
+                true,
+                false
+              );
             }
           });
         }
@@ -282,27 +254,4 @@ currentDisplayPage : string = 'chefs'
     }
   }
   
-
-
-
-
-  // ====BLOCK USERS===========>
-  block (user : User) {
-    this.userService.blockUser(user).subscribe(() => {
-      this.userService.deleteUser(user.id).subscribe(() => {
-        this.showAlert (
-          'Success',
-          "L'utilisateur est bloque avec succes",
-          'success',
-          true,
-          true,
-          false
-        );
-
-        setTimeout(() => {
-          location.reload();
-        }, 2000);
-      });
-    });
-  }
 }

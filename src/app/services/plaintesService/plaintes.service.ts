@@ -7,10 +7,15 @@ import { Plaintes } from '../../interfaces/plaintes';
   providedIn: 'root'
 })
 export class PlaintesService {
-    private plaintesUrl : string = 'http://localhost:8000/api/afficher/plainte';
-    private http = inject(HttpClient)
+  private plaintesUrl : string = 'http://localhost:8000/api/afficher/plainte';
+  private detailsPlaintesUrl : string = 'http://localhost:8000/api/afficher/detailPlainte';
+  private http = inject(HttpClient)
 
     getPlaintes () : Observable<Plaintes []> {
       return this.http.get<Plaintes []>(`${this.plaintesUrl}`);
+    }
+
+    getPlainteDetails (id : string) : Observable <Plaintes> {
+      return this.http.get<Plaintes>(`${this.detailsPlaintesUrl}/${id}`);
     }
 }

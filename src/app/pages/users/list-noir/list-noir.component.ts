@@ -49,9 +49,11 @@ export class ListNoirComponent {
 
   loadUsers () {
     this.userService.getUsers().subscribe(data => {
-      this.users = data.filter(user => user.role == 'CITOYEN' && user.blocquee == 'blocquee').reverse();
-      this.originalUsers = [...data].filter(user => user.role == 'CITOYEN' && user.blocquee == 'blocquee').reverse();
-      this.filteredUsers = data.filter(user => user.role == 'CITOYEN' && user.blocquee == 'blocquee').reverse();
+      this.users = data.filter(user => user.role === 'CITOYEN' && user.blocquee === 'blocquee');
+      this.originalUsers = [...data].filter(user => user.role === 'CITOYEN' && user.blocquee === 'blocquee');
+      this.filteredUsers = data.filter(user => user.role === 'CITOYEN' && user.blocquee === 'blocquee');
+      console.log(this.users);
+      
       this.setUpPagination();
     });
   }
@@ -175,44 +177,6 @@ export class ListNoirComponent {
       });
     }
   }
-
-
-  // ======THE DELETE METHODE===========>
-  delete (id : string) {
-    this.showAlert('etes-vous sur',
-      'Voulez-vous vraiment supprimer cet utilisateur',
-      "info",
-      false,
-      false,
-      true,
-      () => {
-        this.userService.deleteUser(id).subscribe({
-          next : () => {
-              this.showAlert('Success',
-                "L'utilisateur ete supprimer avec succes",
-                'success',
-                false,
-                true,
-                false              
-              );
-            },
-            
-            error : () => {
-              this.showAlert('Error',
-                "Une erreur s'est produite. Veuillez esseyer encore",
-                'error',
-                false,
-                true,
-                false              
-              );
-
-            }
-        })
-      }
-    )
-  }
-
-
 
   // =====RESTORE THE BLOCKED USERS===============>
   

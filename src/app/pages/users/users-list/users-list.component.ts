@@ -53,9 +53,9 @@ export class UsersListComponent {
 
   loadUsers () {
     this.userService.getUsers().subscribe(data => {
-      this.users = data.filter(user => user.role == 'CITOYEN' && user.signal < 3).reverse();
-      this.originalUsers = [...data].filter(user => user.role == 'CITOYEN' && user.signal < 3).reverse();
-      this.filteredUsers = data.filter(user => user.role == 'CITOYEN' && user.signal < 3).reverse();
+      this.users = data.filter(user => (user.role == 'CITOYEN' && user.blocquee !== 'blocquee')).reverse();
+      this.originalUsers = [...data].filter(user => (user.role == 'CITOYEN' &&  user.blocquee !== 'blocquee')).reverse();
+      this.filteredUsers = data.filter(user => (user.role == 'CITOYEN' && user.blocquee !== 'blocquee')).reverse();
       this.setUpPagination();
     });
   }
@@ -178,46 +178,6 @@ export class UsersListComponent {
         alert_box.destroy();
       });
     }
-  }
-
-
-  // ======THE DELETE METHODE===========>
-  delete (id : string) {
-    this.showAlert('etes-vous sur',
-      'Voulez-vous vraiment supprimer cet utilisateur',
-      "info",
-      false,
-      false,
-      true,
-      () => {
-        this.userService.deleteUser(id).subscribe({
-          next : () => {
-              setTimeout ( () => {
-                location.reload();
-              }, 2000 );
-              this.showAlert('Success',
-                "L'utilisateur ete supprimer avec succes",
-                'success',
-                false,
-                true,
-                false              
-              );
-
-            },
-            
-            error : () => {
-              this.showAlert('Error',
-                "Une erreur s'est produite. Veuillez esseyer encore",
-                'error',
-                false,
-                true,
-                false              
-              );
-
-            }
-        })
-      }
-    )
   }
 
 

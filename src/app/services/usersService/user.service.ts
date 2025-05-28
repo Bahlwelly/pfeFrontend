@@ -10,7 +10,6 @@ export class UserService {
 
   private http = inject(HttpClient);
   private getUsersUrl = "http://localhost:8000/api/afficher/utilisateur";
-  private deleteUserUrl = "http://localhost:8000/api/supprimer";
   private signalUrl = "http://localhost:8000/api/signal"
 
   // A METHODE TO GET ALL THE USERS ====>
@@ -22,10 +21,6 @@ export class UserService {
     return this.http.get<User>(`${this.getUsersUrl}/${id}`);
   }
 
-
-  deleteUser (id : string) : Observable<any>{
-    return this.http.delete(`${this.deleteUserUrl}/${id}`);
-  }
 
   signal (id : string, currentCount : number) : Observable<User> {
     const updatedCount = currentCount + 1;

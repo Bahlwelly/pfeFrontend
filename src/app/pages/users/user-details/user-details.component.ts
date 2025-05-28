@@ -107,55 +107,6 @@ export class UserDetailsComponent {
     }
   
 
-
-  // =====DELETE MATHODE====================>
-    deleteUser () {
-      this.showAlert('Etes-vous sur ?', 
-        'voulez vous vraiment supprimer cet utilisateur ?', 
-        'info', 
-        false,
-        false,
-        true,
-        () => {
-          this.userService.deleteUser(this.user.id).subscribe({
-            next : () => {
-              this.showAlert('Success',
-                'Utilisateur supprimer avec succes',
-                'success',
-                true,
-                true,
-                false
-              );
-
-              setTimeout (() => {  
-                if (this.previousPage == 'list_noir') {
-                  this.router.navigate(['/home/users/noir']);
-                }
-                else if (this.previousPage === 'users_list') {
-                  this.router.navigate(['/home/users']);
-                }
-                else if (this.previousPage === 'chefs') {
-                  this.router.navigate(['/home/chefs']);
-                }
-
-              }, 1500);
-            },
-
-            error : (err) => {
-              this.showAlert('Erreur',
-                `Un erreur s'est produit: ${err.status === 404 ? "Utilisateur non trouvé" : "Problème de serveur"}`,
-                'error',
-                true,
-                true,
-                false
-              );
-            }
-          });
-        });
-    }
-
-
-
     //======SIGNAL METHODE=============>
   signal () {
     this.showAlert(
