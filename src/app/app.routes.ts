@@ -8,11 +8,13 @@ import { ListNoirComponent } from './pages/users/list-noir/list-noir.component';
 import { ChefsComponent } from './pages/users/chefs/chefs.component';
 import { PlaintesListComponent } from './pages/plaintes/plaintes-list/plaintes-list.component';
 import { PlainteDetailsComponent } from './pages/plaintes/plainte-details/plainte-details.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {path : '', component : LoginComponent},
     {path : 'home', component: MainComponent, children : [
-        {path:'', redirectTo:'users', pathMatch: 'full'},
+        {path:'', redirectTo:'dashboars', pathMatch: 'full'},
+        {path : 'dashboard', component : DashboardComponent},
         {path : 'users', component :UsersListComponent},
         {path : 'user/details/:id', component: UserDetailsComponent},
         {path : 'users/noir', component : ListNoirComponent},

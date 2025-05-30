@@ -139,6 +139,24 @@
             }
         }
             
+        .invalid {
+            background-color: #ff00009a;
+            td {
+                color: $white;
+            }
+            .options {
+                svg {
+                    fill: $white !important;
+                }
+                button:hover {
+                    background: $white;
+                    svg {
+                        fill: $light-blue !important;
+                    }
+                }
+            }
+        }
+        
         tr {
             background-color: $white;
             td {
@@ -155,7 +173,7 @@
                 border: none;
                 display: flex;
                 align-items: center;
-                justify-content: space-evenly;
+                justify-content: space-between;
                 
                 button {
                     background: transparent;
@@ -170,13 +188,6 @@
                     svg {
                         fill: $dark_blue;
                         transition: all 0.3s ease;   
-                    }
-    
-                    &:first-child:hover {
-                        background: $red;
-                        svg {
-                            fill: $white;
-                        }
                     }
     
                     &:hover {

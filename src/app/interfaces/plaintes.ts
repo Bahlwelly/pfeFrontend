@@ -5,7 +5,9 @@ export interface Plaintes {
     adresse : string;
     image : string;
     examiner : string;
+    valid : string;
     commune : string;
+    code : string;
     [key: string]: any;
 }
 

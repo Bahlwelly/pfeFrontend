@@ -11,6 +11,7 @@ export class UserService {
   private http = inject(HttpClient);
   private getUsersUrl = "http://localhost:8000/api/afficher/utilisateur";
   private signalUrl = "http://localhost:8000/api/signal"
+  private nommerUrl = "http://localhost:8000/api/transformer"
 
   // A METHODE TO GET ALL THE USERS ====>
   getUsers () : Observable<User[]> {
@@ -36,7 +37,7 @@ export class UserService {
     return this.http.post<User>(`${this.getUsersUrl}`, user);
   }
 
-  swithchRole (id : string, newRole : 'CHEF' | 'CITOYEN') : Observable<User> {
-    return this.http.patch<User>(`${this.getUsersUrl}/${id}`, {role : newRole});
+  swithchRole (id : string, newRole : 'CHEF' | 'CITOYEN', newCommune : string) : Observable<User> {
+    return this.http.post<User>(`${this.nommerUrl}/${id}`, {role : newRole, commune : newCommune});
   } 
 }

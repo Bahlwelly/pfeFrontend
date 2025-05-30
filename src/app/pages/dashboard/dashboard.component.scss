@@ -1,0 +1,28 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/animations';
+
+.container {
+    main {
+        div {
+            width: 300px;
+            height: 150px;
+            border-radius: 25px;
+        }
+
+        .chefs {
+            background-color: $light_blue;
+        }
+        .users {
+            background-color: $dark_blue;
+        }
+        .blocked_users {
+            background-color: #b60303;
+        }
+        .plaintes {
+            background-color: #009c46;
+        }
+        .chefs {
+            background-color: $light_blue;
+        }
+    }
+}
