@@ -2,27 +2,79 @@
 @use '../../../styles/animations';
 
 .container {
+    @include animations.fade-in(3s);
     main {
+        height: 100%;
+        margin-top: 120px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 40px;
+
         div {
             width: 300px;
             height: 150px;
             border-radius: 25px;
+            padding: 1rem 1rem;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            h4 {
+                color: $white;
+                letter-spacing: 1px;
+                font-weight: 500;
+            }
+
+            svg {
+                position: absolute;
+                top: 30%;
+                right: 10px;
+                fill: #ffffff86;
+            }
         }
 
         .chefs {
             background-color: $light_blue;
+            &:hover {
+                background-color: #46d3dd;
+
+            }
         }
         .users {
             background-color: $dark_blue;
+            &:hover {
+                background-color: $light_blue;
+    
+            }
         }
         .blocked_users {
             background-color: #b60303;
+            &:hover {
+                background-color: #e20000;
+    
+            }
         }
         .plaintes {
             background-color: #009c46;
+            &:hover {
+                background-color: #00cf5d;
+    
+            }
         }
-        .chefs {
-            background-color: $light_blue;
+        .plaintes_invalids {
+            background-color: #b30220;
+            &:hover {
+                background-color: #da0024;
+    
+            }
         }
+        
+        .plaintes_nonexaminee {
+            background-color: #c25e00;
+            &:hover {
+                background-color: #ff7b00
+    
+            }
+        }
+        
     }
 }
