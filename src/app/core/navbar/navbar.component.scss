@@ -22,16 +22,20 @@
         justify-content: space-evenly;
         width: 100%;
         position: relative;
+
         li {
             display: flex;
             align-items: start;
-            gap: 6px;
+            gap: 8px;
             width: 100%;
             padding: 15px 0;
             padding-left: 40px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 20px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+
 
             &:last-child {
                 position: absolute;
@@ -55,6 +59,9 @@
             color: $white;
             fill: $white;
             background-color: $dark_blue !important;
+            &:hover {
+                background-color: $light_blue !important;
+            }
         }
     }
 }

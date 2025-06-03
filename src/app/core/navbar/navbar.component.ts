@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AlertComponent } from '../alert/alert.component';
 
 @Component({
@@ -17,18 +17,29 @@ export class NavbarComponent {
     this.logout.emit();
   }
 
-  
-  selectedItem : string | null = 'users_list';
+  router = inject(Router);
+  selectedItem : string | null = 'dashboard';
   ngOnInit() {
     const currentPage = localStorage.getItem('currentPage');
-    if (currentPage) {
-      this.selectedItem = currentPage;
-    } 
-    else {
-      this.selectedItem = 'users_list';
-    }
+    this.selectedItem = currentPage ? currentPage : 'dashboard';
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const url = event.urlAfterRedirects;
+        if (url.includes('/home/users')) {
+          this.selectedItem = 'users_list';
+        } else if (url.includes('/home/chefs')) {
+          this.selectedItem = 'chefs';
+        } else if (url.includes('/home/dashboard')) {
+          this.selectedItem = 'dashboard';
+        } else if (url.includes('/home/plaintes')) {
+          this.selectedItem = 'plaintes';
+        }
+      }
+    });
   }
-  
+
+
   switchSelection (item : string) {
     this.selectedItem = item;
     localStorage.setItem('currentPage', this.selectedItem);

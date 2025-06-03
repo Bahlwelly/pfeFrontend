@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent } from './core/login/login.component';
 import { MainComponent } from './pages/main/main.component';
 import { UsersListComponent } from './pages/users/users-list/users-list.component';
 import { UserDetailsComponent } from './pages/users/user-details/user-details.component';
@@ -9,11 +9,13 @@ import { ChefsComponent } from './pages/users/chefs/chefs.component';
 import { PlaintesListComponent } from './pages/plaintes/plaintes-list/plaintes-list.component';
 import { PlainteDetailsComponent } from './pages/plaintes/plainte-details/plainte-details.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AccessNonAuthComponent } from './core/access-non-auth/access-non-auth.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {path : '', component : LoginComponent},
-    {path : 'home', component: MainComponent, children : [
-        {path:'', redirectTo:'dashboars', pathMatch: 'full'},
+    {path : 'home', component: MainComponent, canActivateChild: [authGuard] ,children : [
+        {path:'', redirectTo:'dashboard', pathMatch: 'full'},
         {path : 'dashboard', component : DashboardComponent},
         {path : 'users', component :UsersListComponent},
         {path : 'user/details/:id', component: UserDetailsComponent},
@@ -22,4 +24,6 @@ export const routes: Routes = [
         {path : 'plaintes', component : PlaintesListComponent},
         {path : 'details/plainte/:id', component : PlainteDetailsComponent}
     ]},
+
+    {path : 'access-non-authoriser', component : AccessNonAuthComponent}
 ];

@@ -23,7 +23,7 @@
 
             span {
                 position: absolute;
-                top: -15px;
+                top: -17px;
                 right: 10px;
                 font-size: xx-large;
                 cursor: pointer;
@@ -81,8 +81,9 @@
             }
 
             .navArrows {
-                // padding: 5px 20px; 
+                margin-top: -5px;
                 background: transparent;
+                text-align: center;
                 border: none;
                 outline: none;
                 cursor: pointer;

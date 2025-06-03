@@ -1,7 +1,7 @@
 <ng-container #alert></ng-container>
 <div class="container">
     <div class="header">
-        <h2> <span >&lt;</span> Details du plainte</h2>
+        <h2> <span (click)="backwards(user.id)">&lt;</span> Details du plainte</h2>
     </div>
 
     <div class="body">
@@ -16,16 +16,17 @@
                 <p [style]="plainte.valid == 'valid' ? 'background-color: #0fcc5e;' : 'background-color: #eb3a0e;'" class="label">{{ plainte.valid }}</p>
             }
         </div>
-
+        
         <div class="user_infos">
             <h4>Informations du Plaingnant</h4>
             @if (user) {
-                <p><span style="margin-right: 110px;">Nom :</span> {{ user.name }} </p>
-                <p><span style="margin-right: 62px;">NNI : </span>{{ user.nni }} </p>
-                <p><span style="margin-right: 68px;"> :</span> {{ plainte.commune }} </p>
-                <p><span style="margin-right: 120px;">Etat :</span> {{ plainte.examiner }} </p>
+                <p><span style="margin-right: 78px;">Nom :</span> {{ user.name }} </p>
+                <p><span style="margin-right: 82px;">NNI : </span>{{ user.nni }} </p>
+                <p><span style="margin-right: 93px;">Tel : </span>{{ user.tel }} </p>
 
-                <p [style]="plainte.valid == 'valid' ? 'background-color: #0fcc5e;' : 'background-color: #eb3a0e;'" class="label">{{ plainte.valid }}</p>
+                @if (user.blocquee == 'blocquee') {
+                    <p class="label">{{ user.blocquee }}</p>
+                }
             }
         </div>
     </div>

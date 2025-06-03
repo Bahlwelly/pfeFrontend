@@ -4,11 +4,12 @@ import { User } from '../../interfaces/user';
 import { PlaintesService } from '../../services/plaintesService/plaintes.service';
 import { Plaintes } from '../../interfaces/plaintes';
 import { forkJoin } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -30,7 +31,7 @@ export class DashboardComponent {
         plaintes : this.plaintesService.getPlaintes(),
         users : this.usersService.getUsers()
       }).subscribe( ({ plaintes, users }) => {
-        this.usersNumber = users.filter(user => user.role == 'CITOYEN').length;
+        this.usersNumber = users.filter(user => user.role == 'CITOYEN' && user.blocquee !== 'blocquee').length;
         this.blockedUsersNumber = users.filter(user => user.blocquee == 'blocquee').length;
         this.chefsNumber = users.filter(user => user.role == 'CHEF').length;
 
@@ -42,5 +43,10 @@ export class DashboardComponent {
 
   ngOnInit () {
     this.loadData()
+  }
+
+  private router = inject(Router);
+  showPlaintes (type : string) {
+    this.router.navigate(['/home/plaintes'], {queryParams : {type}});
   }
 }

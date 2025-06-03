@@ -10,5 +10,9 @@ import { LoadingComponent } from "./core/loading/loading.component";
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'pfe_admin_dashboarda'; 
+  title = 'pfe_admin_dashboarda';
+  
+  ngOnDestroy () {
+    sessionStorage.removeItem('token');
+  }
 }

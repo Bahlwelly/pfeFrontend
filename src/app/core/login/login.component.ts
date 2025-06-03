@@ -1,13 +1,15 @@
 import { Component, inject, ViewChild, ViewContainerRef } from '@angular/core';
-import { AlertComponent } from '../../core/alert/alert.component';
+import { AlertComponent } from '../alert/alert.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { LoginService } from '../../services/login/login.service';
+import { LoadingComponent } from "../loading/loading.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterModule],
+  imports: [ReactiveFormsModule, RouterModule, LoadingComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -55,26 +57,31 @@ export class LoginComponent {
   
   // ===========================================FORM SUBMISSON AND VALIDATION=====================================================
   isValid : boolean = true;
-  http = inject(HttpClient);
-  onSubmit () {
+  private loginService = inject(LoginService);
+  onSubmit () { 
 
-    if (this.loginForm.get('password')?.hasError('pattern')) {
-      this.isValid = false;
-      this.showAlert('ERREUR !!',
-        'Le mot de passe doit contenir plus de 6 caractères et inclure au moins un chiffre et une lettre.', 
-        'error', 
-        true, 
-        true, 
-        false);
-    }
-    else if (this.loginForm.get('password')?.hasError('required')) {
+    if (this.loginForm.get('password')?.hasError('required')) {
       this.isValid = false;
       this.showAlert('ERREUR !!', 'Le mot de passe est requis pour se connecter.', 'error', true, true, false);
     }
     else {
+      const password = this.loginForm.get('password')?.value;
+      this.loginService.login(password).subscribe({
+        next : (responce) =>  {
+          const token = responce.token;
+          sessionStorage.setItem('token', token);
+          this.showAlert('SUCCESS', 'Bienvenue.', 'success', false, true, false);
+          setTimeout (() => {
+            this.redirectToHome();
+          }, 2000);
+        },
+        error : (err) => {
+          this.showAlert('ERREUR', 'Login impossible', 'error', false, true, false);
+          console.log(err);
+          
+        }
+      });
       // this.http.post<any>()
-      this.showAlert('SUCCESS', 'Bienvenue.', 'success', false, true, false);
-      this.redirectToHome();
     }
   }
   // ==========================================================================================================================

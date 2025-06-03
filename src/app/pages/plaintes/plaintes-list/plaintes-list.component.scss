@@ -80,7 +80,7 @@
             }
 
             .navArrows {
-                // padding: 5px 20px; 
+                margin-top: -10px;
                 background: transparent;
                 border: none;
                 outline: none;
@@ -94,33 +94,29 @@
         }
 
 
-        .leftside {
+        .filters {
             display: flex;
             align-items: center;
-
+            gap: 15px;
 
             .option {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                @include primary_button ('normal');
+                background-color: $dark-blue;
+                padding: 10px 20px;
+                border-radius: 10px;
+                color: $white;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
     
-                &:last-child {
-                    border: none;
-                    background-color: transparent;
-                    @include input_field;
-                    flex-direction: row;
-                    width: 200px;
-    
-                    select {
-                        cursor: pointer;
-                    }
-    
-                    svg {
-                        @include icon(bfore);
-                        left: 25px;
-                    }
+                &:hover {
+                    background-color: $light-blue;
                 }
+            }
+
+            .selected {
+                background-color: $white !important;
+                border: 2px solid $dark-blue;
+                color: $dark-blue;
             }
         }
     }
@@ -173,7 +169,7 @@
                 border: none;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                justify-content: space-around;
                 
                 button {
                     background: transparent;

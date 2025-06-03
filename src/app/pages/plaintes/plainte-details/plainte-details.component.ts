@@ -3,7 +3,7 @@ import { PlaintesService } from '../../../services/plaintesService/plaintes.serv
 import { Plaintes } from '../../../interfaces/plaintes';
 import { User } from '../../../interfaces/user';
 import { UserService } from '../../../services/usersService/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-plainte-details',
@@ -30,11 +30,25 @@ export class PlainteDetailsComponent {
   }
 
 
+  currentPage : string = 'plaintes';
+
   private route = inject(ActivatedRoute);
   ngOnInit () {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id')!;
       this.loadData(id);
     });
+
+    this.currentPage = localStorage.getItem('currentPage')!;
+  }
+
+  private router = inject (Router);
+  backwards (id? : string) {
+    if (this.currentPage === 'plaintes') {
+      this.router.navigate(['/home/plaintes']);
+    }
+    else if (this.currentPage === 'users_list' || this.currentPage === 'chefs') {
+      this.router.navigate(['/home/user/details', id]);
+    }
   }
 }

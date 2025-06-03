@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../../interfaces/user';
+import { Demande } from '../../interfaces/demande';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class UserService {
   private getUsersUrl = "http://localhost:8000/api/afficher/utilisateur";
   private signalUrl = "http://localhost:8000/api/signal"
   private nommerUrl = "http://localhost:8000/api/transformer"
+  private demandeUrl = "http://localhost:8000/api/afficher/demande"
 
   // A METHODE TO GET ALL THE USERS ====>
   getUsers () : Observable<User[]> {
@@ -40,4 +42,8 @@ export class UserService {
   swithchRole (id : string, newRole : 'CHEF' | 'CITOYEN', newCommune : string) : Observable<User> {
     return this.http.post<User>(`${this.nommerUrl}/${id}`, {role : newRole, commune : newCommune});
   } 
+
+  getDemande () :  Observable<Demande> {
+    return this.http.get<Demande>(this.demandeUrl);
+  }
 }

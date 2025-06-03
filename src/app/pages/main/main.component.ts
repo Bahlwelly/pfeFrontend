@@ -49,6 +49,7 @@ export class MainComponent {
         false,
         true,
         () => {
+          sessionStorage.removeItem('token');
           this.router.navigate(['/']);
         }
       )

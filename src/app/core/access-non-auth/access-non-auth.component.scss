@@ -1,0 +1,39 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/animations' as *;
+
+.container {
+    @include container;
+
+    .alert-box {
+        @include card;
+        height: 23rem;
+        width: 30rem;
+        justify-content: space-around;
+        padding: 30px;
+
+        .title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            h1 {
+                color : $red;
+            }
+    
+            img {
+                width: 90px;
+                height: 90px;
+            }
+    
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            button {
+                @include primary-button('');
+                width: 50%;
+            }
+        }
+    }
+}

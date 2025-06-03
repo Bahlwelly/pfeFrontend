@@ -96,7 +96,7 @@
             }
 
             .navArrows {
-                // padding: 5px 20px; 
+                margin-top: -10px;
                 background: transparent;
                 border: none;
                 outline: none;
@@ -180,12 +180,6 @@
                         transition: all 0.3s ease;   
                     }
     
-                    &:first-child:hover {
-                        background: $red;
-                        svg {
-                            fill: $white;
-                        }
-                    }
     
                     &:hover {
                         background: $light-blue;
