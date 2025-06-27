@@ -42,37 +42,70 @@
 
         .general_infos {
             @include card;
-            padding: 20px;
             width: 45%;
             display: flex;
             flex-direction: column;
             align-items: start;
-            gap: 30px;
             position: relative;
 
-            h4 {
-                color: $light-blue;
+            header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
                 width: 100%;
-                text-align: center;
-            }
-            
-            p {
-                span {
-                    font-weight: 600;
-                    color: $dark-blue;
+                padding: 10px;
+
+                .etat {
+                    padding: 5px;
+                    border-radius: 5px;
+                    color: $white;
+                }
+                .valid {
+                    background-color: $green;
+                }
+                .invalid {
+                    background-color: $red;
+                }
+                .en_cours {
+                    background-color: #f5bc00;
+                }
+                .en_attente {
+                    background-color: $light-blue;
                 }
             }
 
-            .label {
-                position: absolute;
-                top: 0;
-                right: 0;
-                padding: 0.6rem 2rem;
-                color: $white;
-                font-weight: 500;
-                font-size: larger;
-                border-top-right-radius: 10px;
+            .image {
+                width: 105.5%;
+                background: $grey;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: -12px;
+                img {
+                    height: 200px;
+                    width: 300px;
+                    object-fit: cover
+                }
             }
+
+            .info {
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                p {
+                    display: flex;
+                    text-align: justify;
+                    align-items: start;
+                    span {
+                        width: 150px;
+                        color: $dark-blue;
+                        font-weight: 600;
+                    }
+                }
+            }
+
             
         }
         
@@ -83,33 +116,29 @@
             display: flex;
             flex-direction: column;
             align-items: start;
-            gap: 30px;
+            gap: 40px;
             position: relative;
 
-            h4 {
-                color: $light-blue;
-                width: 100%;
-                text-align: center;
-            }
             
-            p {
-                span {
-                    font-weight: 600;
-                    color: $dark-blue;
+            
+            .user , .chef {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                h4 {
+                    color: $light-blue;
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    span {
+                        font-weight: 600;
+                        color: $dark-blue;
+                    }
                 }
             }
 
-            .label {
-                position: absolute;
-                top: 0;
-                right: 0;
-                padding: 0.6rem 2rem;
-                color: $white;
-                font-weight: 500;
-                font-size: larger;
-                border-top-right-radius: 10px;
-                background: $red;
-            }
+
         }
     }
 }

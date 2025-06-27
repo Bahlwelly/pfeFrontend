@@ -1,0 +1,77 @@
+@use '../../../styles/variables' as *;
+
+.container {
+    background-color: $grey;
+    head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width : 100%;
+        margin-bottom: 3rem;
+        padding: 1rem;
+        padding-bottom: 0;
+
+        button {
+            padding: 4px 5px;
+            border: none;
+            border-radius: 50%; 
+            color: $red;
+            background-color: $white;
+            transition: all 0.3s ease-in-out;   
+            cursor: pointer;
+            outline: none;
+
+            &:hover {
+                color: $white;
+                background-color: $red;
+            }
+        }
+    }
+    
+    .large_image_container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #292929;
+        padding : 20px;
+        margin-top: -30px;
+
+        .large_image {
+            max-width: 100%;
+            max-height: 50vh;
+            cursor: zoom-in;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+    
+    
+    .thumbnails {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        overflow-x: auto;
+        background-color: #00000062;
+        img {
+            height: 100px;
+            cursor: pointer;
+            opacity: 0.6;
+            border: 3px solid $white;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 0px 10px #9c9c9c;
+
+            &:hover {
+                border: 3px solid $dark-blue;
+            }
+        }
+    
+        img.active {
+        border: 3px solid $dark-blue;
+        opacity: 1;
+        }
+    }
+
+}
+  

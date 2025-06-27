@@ -3,104 +3,111 @@
 
 .container {
     @include animations.fade-in(2s);
-    main {
-        height: 100%;
-        margin-top: 110px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        row-gap: 9rem;
-        position: relative;
+    
+    header {
+        width: 100%;
+        padding: 30px;
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-        h3 {
-            position: absolute;
-            margin-left: 20px;
-            letter-spacing: 0.1rem;
-            z-index: 999;
-            color: $dark_blue;
-        }
-
-        .top-title {
-            top: -2.5rem;
-        }
-
-        .lower-title {
-            top: 16rem;
-        }
-
-        div {
-            width: 300px;
-            height: 150px;
-            border-radius: 25px;
-            padding: 1rem 1rem;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            h4 {
-                color: $white;
+            div {
+                font-weight: 600;
                 letter-spacing: 1px;
-                font-weight: 500;
-            }
-
-            p {
-                font-size: 3rem;
-                position: absolute;
-                top: 30%;
-                left: 10%;
+                background-color: $dark-blue;
                 color: $white;
-                font-weight: 500;
-            }
+                padding: 10px 20px;
+                border: 2px solid $dark-blue;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all .3s ease-in-out;
 
-            svg {
-                position: absolute;
-                top: 30%;
-                right: 10px;
-                fill: #ffffff86;
+                &:hover {
+                    border: 2px solid $dark-blue;
+                    background: transparent;
+                    color: $dark-blue;
+                }
+            }
+            .selected {
+                border: 2px solid $dark-blue;
+                background: transparent;
+                color: $dark-blue;
             }
         }
+    }
 
-        .chefs {
-            background-color: $light_blue;
-            &:hover {
-                background-color: #46d3dd;
-
+    main {
+        h3 {
+            select {
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 4px;
+                font-weight: 600;
+                margin-left: 5px;
+                border-radius: 5px;
+                option {
+                    background: $white;
+                }
             }
         }
-        .users {
-            background-color: $dark_blue;
-            &:hover {
-                background-color: $light_blue;
-    
+        .content {
+            margin-top: 20px;
+            .numbers {
+                .card {
+                    @include card;
+                    align-items: start;
+                    width: 300px;
+                    margin-bottom: 10px;
+                    .head {
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                        font-weight: 600;
+                        position: relative;
+                        width: 100%;
+                        select {
+                            position: absolute;
+                            right: 0;
+                            border: none;
+                            outline: none;
+                            cursor: pointer;
+                            padding: 4px;
+                            background: $grey;
+                            border-radius: 5px;
+                            option {
+                                background: $white;
+                            }
+                        }
+                        svg {
+                            fill: $light-blue;
+                        }
+                    }
+                    .num {
+                        font-size: 40px;
+                        margin-left: 10px; 
+                        width: 95%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+                    .section {
+                        border-bottom: 2px solid #666666;
+                        padding: 5px;
+                        width: 100%;
+                        .num {
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                        }
+                        &:last-child {
+                            border: none;
+                        }
+                    }
+                }
             }
         }
-        .blocked_users {
-            background-color: #b60303;
-            &:hover {
-                background-color: #e20000;
-    
-            }
-        }
-        .plaintes {
-            background-color: #009c46;
-            &:hover {
-                background-color: #00cf5d;
-    
-            }
-        }
-        .plaintes_invalids {
-            background-color: #b30220;
-            &:hover {
-                background-color: #da0024;
-    
-            }
-        }
-        
-        .plaintes_nonexaminee {
-            background-color: #c25e00;
-            &:hover {
-                background-color: #ff7b00
-    
-            }
-        }
-        
     }
 }

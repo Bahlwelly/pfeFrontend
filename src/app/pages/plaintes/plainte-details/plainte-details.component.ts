@@ -17,18 +17,50 @@ export class PlainteDetailsComponent {
   private usersService = inject(UserService);
   plainte! : Plaintes;
   user! : User;
-
+  chef! : User;
+  dateCreation! : string;
+  dateInspection! : string;
 
   loadData (id : string) {
     this.plainteService.getPlainteDetails(id).subscribe((data) => {
       this.plainte = data;
+      this.dateCreation = new Date(data.created_at).toISOString();
+      this.dateInspection = new Date(data.updated_at).toISOString();
+      
       this.usersService.getUserDetails(this.plainte.user_id).subscribe((data) => {
         this.user = data;
         console.log(`the plainte ${this.plainte.id} and the user ${this.user.id} are loaded`);
       });
+      this.usersService.getUserDetails(this.plainte.chef_id).subscribe(data => {
+        this.chef = data;
+      });
     });
   }
 
+  translateDetails (details : string) {
+    switch (details) {
+      case 'منتج منتهي الصلاحية' :
+        return 'Produit périmé.';
+
+      case 'منتج ملوث' :
+        return 'Produit contaminé.';
+
+      case 'منتج فاسد' :
+        return 'Produit avarié.';
+
+      case 'تغليف تالف' :
+        return "Emballage endommagé.";
+
+      case 'وجود أجسام غريبة' : 
+        return "Présence de corps étrangers.";
+
+      case 'رائحة أو طعم غير طبيعي' :
+        return "Odeur ou goût anormal.";
+
+      default : 
+        return details;
+    }
+  }
 
   currentPage : string = 'plaintes';
 

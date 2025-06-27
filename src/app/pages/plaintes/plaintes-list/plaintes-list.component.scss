@@ -6,6 +6,16 @@
     display: flex;
     flex-direction: column;
 
+    .btn_opt {
+        @include primary-button('normal');
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: medium;
+        padding: 7px 12px;
+        font-weight: 600;
+    }
+
     .header {
         display: flex;
         align-items: center;
@@ -63,6 +73,37 @@
         gap: 10px;
         width : 100%;
 
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .option {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                @include primary_button ('normal');
+    
+                &:first-child {
+                    border: none;
+                    background-color: transparent;
+                    @include input_field;
+                    flex-direction: row;
+                    width: 215px;
+                    
+                    select {
+                        cursor: pointer;
+                    }
+    
+                    svg {
+                        @include icon(bfore);
+                        left: 25px;
+                    }
+                }
+            }
+        }
+        
+
         .pagination {
             display: flex;
             align-items: center;
@@ -94,31 +135,6 @@
         }
 
 
-        .filters {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-
-            .option {
-                background-color: $dark-blue;
-                padding: 10px 20px;
-                border-radius: 10px;
-                color: $white;
-                font-weight: 500;
-                cursor: pointer;
-                transition: all 0.3s ease;
-    
-                &:hover {
-                    background-color: $light-blue;
-                }
-            }
-
-            .selected {
-                background-color: $white !important;
-                border: 2px solid $dark-blue;
-                color: $dark-blue;
-            }
-        }
     }
 
 
@@ -156,7 +172,8 @@
         tr {
             background-color: $white;
             td {
-                padding: 6px;
+                border-radius: 5px;
+                padding: 4px;
                 border: 1px solid $black;
                 text-align: center;
             }
@@ -194,6 +211,178 @@
                     }
                 }
             }
+        }
+    }
+
+
+    .filterage_container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0000005e;
+
+        .filters {
+            @include card;
+            width: 40%;
+            align-items: start;
+            padding: 20px;
+
+            header {
+                display: flex;
+                align-items: start;
+                justify-content: space-between;
+                width: 100%;
+                position: relative;
+                height: 47px;
+
+                h3 {
+                    label {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        font-weight: 400;
+                        font-size: medium;
+                    }
+                }
+
+                button {
+                    border-radius: 50%;
+                    color : $red;
+                    background-color: $white;
+                    padding: 3px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: none;
+                    outline: none;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease-in-out;
+                    &:hover {
+                        color : $white;
+                        background-color: $red;
+                    }
+                }
+            }
+
+            .filter_options {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 3px;
+                margin-top: 1.5rem;
+                margin-left: 10px;
+                select {
+                    padding: 2px;
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    font-size: medium;
+                    font-weight: 600;
+
+                    option {
+                        font-size: small;
+                    }
+                }
+            }
+            
+            .opts {
+                margin-left: 10px;
+                width: 100%;
+                margin-top: 1.5rem;
+                .communes {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 25px;
+
+                    .com {
+                        input {
+                            cursor: pointer;
+                            accent-color: $dark-blue;
+                        }
+                    }
+                }
+                .user_input {
+                    .input {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        @include input_field;
+                        width: 100%;
+                        align-items: start;
+                        input {
+                            width: 50%;
+                        }
+                        
+                        svg {
+                            margin-top: 15px;
+                            @include icon('before');
+                        }
+                    }
+                }
+
+                .detailsSelect {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 3px;
+                    select {
+                        padding: 4px;
+                        background-color: transparent;
+                        border: 2px solid $black;
+                        border-radius: 10px;
+                        outline: none;
+                        cursor: pointer;
+                        font-size: medium;
+                        width: 50%;
+                        transition: all 0.3s ease-in-out;
+                        &:focus {
+                            border : 2px solid $light-blue;
+                        }
+                        option {
+                            font-size: small;
+                        }
+                    }
+                }
+    
+                .datepicker-inline-wrapper {
+                    position: relative;
+                    @include input_field;
+                    align-items: start;
+                    input {
+                        width: 70%;
+                    }
+                    svg {
+                        @include icon('before');
+                    }
+
+                    .calendar-popup {
+                        position: absolute;
+                        top: 0;
+                        right: -120px;
+                        border-radius: 10px;
+                        padding: 10px;
+                        background: white;
+                        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                        z-index: 1000;
+                        accent-color: $dark-blue;
+                    }  
+                }
+            }
+            
+        }
+
+        .btns {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
     }
 }

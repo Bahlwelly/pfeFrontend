@@ -4,11 +4,15 @@ import { AlertComponent } from '../../../core/alert/alert.component';
 import { User } from '../../../interfaces/user';
 import { UserService } from '../../../services/usersService/user.service';
 import { FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-chefs',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MatIcon],
   templateUrl: './chefs.component.html',
   styleUrl: './chefs.component.scss'
 })
@@ -27,7 +31,7 @@ currentDisplayPage : string = 'chefs'
 
 
   // PAGINATION METHODE =========>
-  pageSize : number = 7;
+  pageSize : number = 6;
   currentPage : number = 1;
   pages : number [] = [];
 
@@ -77,7 +81,6 @@ currentDisplayPage : string = 'chefs'
     const value = (event.target as HTMLSelectElement).value;
     this.sortUsers(value);
     console.log(this.originalUsers);
-    
   }
 
 
@@ -253,5 +256,99 @@ currentDisplayPage : string = 'chefs'
       );
     }
   }
+
+  // ============IMPORTS AND FILTERS===================>
+  filterVisible : boolean = false;
+  toggleFilters (show : boolean) {
+    this.filterVisible = show;
+  }
+
+
+  filterOption : string = 'commune';
+  selectFilterOption (event : Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    this.filterOption = value;
+  }
+
   
+  
+  communes = ["Dar Naim", "Teyarett", "Toujounine", "Ksar", "Tevragh-Zeina", "Sebkha", "Arafat", "El Mina", "Riad"];
+  selectedCommunes : string [] = [];
+
+  toggleCommunes (commune : string , event : Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    if (checked) {
+      this.selectedCommunes.push(commune);
+      console.log(`Commune added : ${this.selectedCommunes}`);
+    }
+    else {
+      this.selectedCommunes = this.selectedCommunes.filter(c => c !== commune);
+      console.log(`Commune removed : ${this.selectedCommunes}`);
+    }
+  }
+
+  userQuery! : string;
+
+  exportTable (data : User [] , format : 'pdf' | 'excel', fileName : string = 'Inspecteurs') {
+    if (!data || data.length === 0) {
+      console.error('NO DATA TO EXPORT');
+    }
+
+    const exportData = data.map( user => {
+      return {
+        Nom : user.name,
+        NNI : user.nni,
+        Telephone : user.tel,
+        Commune : user.commune
+      }
+    });
+
+    if (format === 'pdf') {
+      const headers = Object.keys(exportData[0]);
+      const rows = exportData.map(user => headers.map(key => (user as any)[key]));
+      const doc = new jsPDF();
+
+      autoTable (doc , {
+        head : [headers],
+        body : rows
+      });
+
+      doc.save(`${fileName}.pdf`);
+    }
+    else if (format === 'excel') {
+      const workSheet : XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+
+      const workBook : XLSX.WorkBook = {
+        Sheets : {'Sheet 1' : workSheet},
+        SheetNames : ['Sheet 1']
+      };
+
+      XLSX.writeFile(workBook, `${fileName}.xlsx`);
+    }
+  }
+
+  
+  filterExport (format : 'excel' | 'pdf') {
+    let finalData = []
+    if (this.selectedCommunes.length === 0) {
+      finalData = this.filteredUsers;
+    }
+    else {
+      console.log(this.selectedCommunes);
+      
+      finalData = this.filteredUsers.filter(user => 
+        this.selectedCommunes.some( comm => 
+          comm.trim().toLocaleLowerCase() === user.commune.trim().toLowerCase()
+        )
+      );
+    }
+
+    let communeNames = this.selectedCommunes.join('_');
+    let fileName = this.selectedCommunes.length > 0 ? `Inspecteurs_${communeNames}` : 'Inspecteurs';
+    this.exportTable(finalData, format, fileName);
+
+    console.log(`Data : ${finalData}\nfileName : ${fileName}\nformat : ${format}`);
+    
+  }
 }

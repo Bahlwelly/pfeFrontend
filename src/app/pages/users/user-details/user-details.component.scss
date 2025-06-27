@@ -80,17 +80,28 @@
         .plaintes {
             @include card;
             // padding: 20px;
-            width: 45%;
+            width: 70%;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding-top: 40px;
             position: relative;
-
             overflow-y: auto;
             max-height: 450px;
             min-height: 280px;
             scrollbar-color: #e0e0e0 transparent;
+
+            .noPls {
+                width: 100%;
+                margin-top: 9%;
+                font-size: large;
+                font-weight: 500;
+                letter-spacing: 0.2rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                align-items: center;
+            }
 
             h4 {
                 top: 10px;
@@ -109,19 +120,57 @@
                 }
 
                 .ex {
-                    padding: 4px;
-                    border-radius: 10px;
+                    padding: 4px 8px;
+                    border-radius: 5px;
                     color: $white;
                     font-size: 15px;
+                    font-weight: 500;
                 }
                 
-                .examinee {
+                .att {
                     background-color: $light-blue;
                 }
+                
+                .cours {
+                    background-color: orange;
+                }
+                
+                .valid {
+                    background-color: #00b135;
+                }
 
-                .pasExaminee {
+                .invalid {
                     background-color: $red;
                 }
+
+                .filters {
+                    width: 100%;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 5px;
+                    min-height: 100px;
+                    margin-bottom: 5px;
+                    .option {
+                        padding: 8px;
+                        background-color: $dark-blue;
+                        color: $white;
+                        border: 2px solid $dark-blue;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        transition: all 0.3s ease-in-out;
+                        
+                        &:hover {
+                            background-color: $white;
+                            color: $dark-blue;
+                        }
+                    }
+                    .selected {
+                        border: 2px solid $dark-blue;
+                        background-color: $white;
+                        color: $dark-blue;
+                    }
+                }
+                
 
             .plainte {
                 padding: 20px 15px;
@@ -129,8 +178,6 @@
                 cursor: pointer;
                 transition: all 0.3s ease;
                 width: 100%;
-
-                
                 &:hover {
                     background-color: $grey;
                 }
@@ -147,6 +194,7 @@
                 }
 
                 .details {
+                    margin-bottom: 5px;
                     font-size: 15px;
                 }
             }

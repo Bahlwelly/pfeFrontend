@@ -11,9 +11,13 @@ import { PlainteDetailsComponent } from './pages/plaintes/plainte-details/plaint
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AccessNonAuthComponent } from './core/access-non-auth/access-non-auth.component';
 import { authGuard } from './guards/auth.guard';
+import { RegisterComponent } from './core/register/register.component';
+import { DemandesComponent } from './pages/demandes/demandes.component';
+import { DetailsDemandeComponent } from './pages/demandes/details-demande/details-demande.component';
 
 export const routes: Routes = [
     {path : '', component : LoginComponent},
+    {path : 'register', component : RegisterComponent},
     {path : 'home', component: MainComponent, canActivateChild: [authGuard] ,children : [
         {path:'', redirectTo:'dashboard', pathMatch: 'full'},
         {path : 'dashboard', component : DashboardComponent},
@@ -22,7 +26,9 @@ export const routes: Routes = [
         {path : 'users/noir', component : ListNoirComponent},
         {path : 'chefs', component : ChefsComponent},
         {path : 'plaintes', component : PlaintesListComponent},
-        {path : 'details/plainte/:id', component : PlainteDetailsComponent}
+        {path : 'details/plainte/:id', component : PlainteDetailsComponent},
+        {path : 'demandes', component : DemandesComponent},
+        {path : 'demande/details/:id', component : DetailsDemandeComponent}
     ]},
 
     {path : 'access-non-authoriser', component : AccessNonAuthComponent}

@@ -35,17 +35,42 @@
         
         <div class="plaintes">
             <h4>Plaintes</h4>
+            
+        <div class="filters">
+            @if (user.role === 'CHEF') {
+                <p class="option" [class]="selectedType == 'invs' ? 'selected' : ''" (click)="filterPLaintes('invs')">Plaintes Enquêté  : {{ plaintesInvestigue.length }} </p>
+            }  
+
+            <p class="option" [class]="selectedType == 'valid' ? 'selected' : ''" (click)="filterPLaintes('valid')">Plaintes Valids : {{ pliantesValid.length }} </p>
+
+            <p class="option" [class]="selectedType == 'en_attente' ? 'selected' : ''" (click)="filterPLaintes('en_attente')">Plaintes en attente : {{ pliantesEnEttente.length }} </p>
+            
+            <p class="option" [class]="selectedType == 'en_cours' ? 'selected' : ''" (click)="filterPLaintes('en_cours')">Plaintes en cours : {{ pliantesEnCours.length }} </p>
+
+            <p class="option" [class]="selectedType == 'invalid' ? 'selected' : ''" (click)="filterPLaintes('invalid')">Plaintes invalids : {{ pliantesInvalid.length }}</p>
+        </div>
+
             @if (user) {
-                @for (plainte of plaintes; track $index) {
-                    <div class="plainte" routerLink="/home/details/plainte/{{ plainte.id }}">
-                        <div class="top">
-                            <p>{{ plainte.code }}</p>
-                            <p class="ex" [class]="plainte.examiner == 'examinee' ? 'examinee' : 'pasExaminee'">{{ plainte.examiner }}</p>
+                @if (showenPlaintes.length) {
+                    @for (plainte of showenPlaintes; track $index) {
+                        <div class="plainte" routerLink="/home/details/plainte/{{ plainte.id }}">
+                            <div class="top">
+                            <p>{{ plainte.created_at | date:'dd-MM-yyyy' }}</p>
+
+                            <p class="ex" [class]="plainte.etat.toLowerCase() === 'en attente' ? 'att' : plainte.etat.toLocaleLowerCase() === 'en cours' ? 'cours' : plainte.etat.toLocaleLowerCase() === 'valid' ? 'valid' : plainte.etat.toLocaleLowerCase() === 'invalid' ? 'invalid' : ''">{{ plainte.etat }}</p>
                         </div>
-                        <p class="details">{{ plainte.details | shortener:7}}</p>
-                    </div>
+                        <p class="details">Details : {{ plainte.details | shortener:7}}</p>
+                        @if (plainte.rapport) {
+                            <p class="details">Motif : {{ plainte.rapport | shortener:14}}</p>
+                        }
+                        </div>
+                    }
+                } @else {
+                    <p class="noPls">AUCUN PLAINTES</p>
                 }
             }
         </div>
+
+
     </div>
 </div>

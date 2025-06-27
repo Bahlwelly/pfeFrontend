@@ -7,11 +7,13 @@ import { Plaintes } from '../../../interfaces/plaintes';
 import { ShortenerPipe } from "../../../pipes/shortener.pipe";
 import { AlertComponent } from '../../../core/alert/alert.component';
 import { Subscription } from 'rxjs';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-user-details',
   standalone: true,
-  imports: [RouterLink, ShortenerPipe],
+  imports: [RouterLink, ShortenerPipe, DatePipe],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss'
 })
@@ -19,7 +21,7 @@ export class UserDetailsComponent {
   // =====REIDRECTING THE USER TO THE PREVIOUS PAGE=============>
   previousPage : string = 'users_list';
   router = inject(Router);
-  back(id? : string) {
+  back() {
     if (this.previousPage == 'list_noir') {
       this.router.navigate(['/home/users/noir']);
     }
@@ -72,6 +74,13 @@ export class UserDetailsComponent {
   
   plaintesService = inject(PlaintesService);
   plaintes : Plaintes [] = [];
+  pliantesEnEttente : Plaintes[] = [];
+  pliantesEnCours : Plaintes[] = [];
+  pliantesValid : Plaintes[] = [];
+  pliantesInvalid : Plaintes[] = [];
+  showenPlaintes : Plaintes[] = [];
+  plaintesInvestigue : Plaintes [] = [];
+  selectedType : string = 'vlaid';
   loadUserPlaintes () {
     if (!this.user || !this.user.id) {
       console.error('User data not available');
@@ -79,10 +88,47 @@ export class UserDetailsComponent {
     }
     this.plaintesService.getPlaintes().subscribe(data => {
       this.plaintes = data.filter(plainte => plainte.user_id == this.user.id);
+      this.plaintesInvestigue = data.filter(pl => pl.chef_id === this.user.id);
+      this.pliantesEnEttente = this.plaintes.filter(pl => pl.etat.toLowerCase() === 'en attente');
+      this.pliantesEnCours = this.plaintes.filter(pl => pl.etat.toLowerCase() === 'en cours');
+      this.pliantesValid = this.plaintes.filter(pl => pl.etat.toLowerCase() === 'valid');
+      this.pliantesInvalid = this.plaintes.filter(pl => pl.etat.toLowerCase() === 'invalid');
+
+      console.log(this.plaintesInvestigue);
+      
+      this.selectedType = 'valid';
+      this.showenPlaintes = this.pliantesValid;
     });
   }
 
+  filterPLaintes (type : string) {
+    switch (type) {
+      case 'valid' : 
+        this.showenPlaintes = this.pliantesValid;
+        break;
 
+      case 'invalid' : 
+        this.showenPlaintes = this.pliantesInvalid;
+        break;
+      
+      case 'en_attente' :
+        this.showenPlaintes = this.pliantesEnEttente;
+        break;
+
+      case 'en_cours' :
+        this.showenPlaintes = this.pliantesEnCours;
+        break;
+
+      case 'invs' :
+        this.showenPlaintes = this.plaintesInvestigue;
+        break;
+
+      default : 
+        this.showenPlaintes = this.plaintes;
+        break;
+    }
+    this.selectedType = type;
+  }
 
   // ================================================DECLARING THE ALERT COMPONENT==========================================================================
     @ViewChild ('alert', {read : ViewContainerRef}) alert! : ViewContainerRef;

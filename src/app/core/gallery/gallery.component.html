@@ -1,0 +1,17 @@
+
+<div class="container">
+    <head>
+        <h2>Documents</h2>
+        <button (click)="close()"><mat-icon>close</mat-icon></button>
+    </head>
+
+    <div class="large_image_container">
+        <img src="{{ selectedImage }}" class="large_image" (click)="toggleFullscreen($event)">
+    </div>
+    
+    <div class="thumbnails">
+        @for (image of data.images; track $index) {
+            <img src="{{ image }}" [class.active]="image === selectedImage" (click)="selectedImage = image">
+        }
+    </div>
+</div>

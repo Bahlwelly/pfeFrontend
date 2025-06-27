@@ -1,0 +1,89 @@
+<div class="container">
+    <ng-container #alert></ng-container>
+    <!-- ============================HEADER START======================================== -->
+    <div class="header">
+        <h2>Demandes</h2>
+        
+         <!-- ============================SEARCH FIELD START======================================== -->
+         <div class="search">
+            <input [(ngModel)]="query" type="text" placeholder="Chercher {{ getSearchLabel(searchField) }}" (input)="filterUsers()" (focus)="showOptions = false">
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><g fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path d="M10.5 4a6.5 6.5 0 1 0 0 13a6.5 6.5 0 0 0 0-13M2 10.5a8.5 8.5 0 1 1 15.176 5.262l3.652 3.652a1 1 0 0 1-1.414 1.414l-3.652-3.652A8.5 8.5 0 0 1 2 10.5M9.5 7a1 1 0 0 1 1-1a4.5 4.5 0 0 1 4.5 4.5a1 1 0 1 1-2 0A2.5 2.5 0 0 0 10.5 8a1 1 0 0 1-1-1"/></g></svg>
+
+            <span (click)="toggleOptions()">&#8964;</span>
+
+            @if (showOptions) {
+                <ul>
+                    @for (field of searchFields; track $index) {
+                        <li (click)="selectField(field)"> {{ getSearchLabel(field) }} </li>
+                    }
+                </ul>
+            }
+
+        </div>
+        <!-- ============================SEARCH FIELD END======================================== -->
+       
+    </div>
+    <!-- ============================HEADER END======================================== -->
+    
+
+    <!-- ============================OPTIONS START======================================== -->
+    <div class="options">
+        <!-- FILTER TABLE OPTION =======> -->
+        <div class="option">
+            <!-- THE FILTER METHODE SELECTION ========> -->
+            <select (change)="onSortChange($event)" name="filter" id="filter">
+                @for (option of filterOptions; track option) {
+                    <option [selected]="option === 'Plus récent'" value="{{option}}">{{ option }}</option>
+                }
+            </select>
+            
+            <!-- SETTINGS ICON =========> -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M22 18.605a.75.75 0 0 1-.75.75h-5.1a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h7.74a2.93 2.93 0 0 1 5.66 0h5.1a.75.75 0 0 1 .75.75m0-13.21a.75.75 0 0 1-.75.75H18.8a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h10.39a2.93 2.93 0 0 1 5.66 0h2.45a.74.74 0 0 1 .75.75m0 6.6a.74.74 0 0 1-.75.75H9.55a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h1.14a2.93 2.93 0 0 1 5.66 0h11.7a.75.75 0 0 1 .75.75"/></svg>
+        </div>        
+
+        <div class="pagination">
+            <button class="navArrows" (click)="changePange(currentPage - 1)" [disabled]="currentPage === 1">&lt;</button>
+            @for (page of pages; track $index) {
+                <button [class.selected]="currentPage === page" class="navButtons" (click)="changePange(page)">
+                    {{page}}
+                </button>
+            }
+            <button class="navArrows" (click)="changePange(currentPage + 1)" [disabled]="currentPage === pages.length">&gt;</button>
+        </div>
+
+    </div>
+    <!-- ============================OPTIONS END======================================== -->
+    
+    <!-- ===========BODY START==============================> -->
+
+    <div class="demandes">
+        @for (demande of filteredDemandes; track $index) {
+            <div class="demande" (click)="getDetails(demande.id)">
+                <div class="head">
+                    <div class="user_info">
+                        <p class="user_name">De : {{ getUser(demande.user_id)?.name }}</p>
+                        <p class="user_number">{{ getUser(demande.user_id)?.tel }}</p>
+                    </div>
+
+                    <p class="date"> {{ demande.temps_creation | date:'yyyy-MM-dd'}} </p>
+                </div>
+
+                <div class="details">
+                    <p><span style="margin-right: 70px;">Commnue : </span> {{ demande.commune }} </p>
+                    <p><span style="margin-right: 40px;">Horaires libres : </span> {{ demande.horaires }} / Jour </p>
+                    <p><span style="margin-right: 50px;">Rendez-Vous : </span> {{ demande.rendez_vous }} </p>
+
+                    <div class="buttons">
+                        <button (click)="showDocuments([demande.carte_identite, demande.casier_judiciaire, demande.extrait_naissance])">Documents</button>
+                        <button class="accept">Accepter</button>
+                        <button class="reject">Rejeter</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- ===========BODY END==============================> -->
+</div>
+

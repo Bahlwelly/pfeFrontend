@@ -4,11 +4,15 @@ import { UserService } from '../../../services/usersService/user.service';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AlertComponent } from '../../../core/alert/alert.component';
+import { MatIcon } from '@angular/material/icon';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-users-list',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, MatIcon],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss'
 })
@@ -26,7 +30,7 @@ export class UsersListComponent {
 
 
   // PAGINATION METHODE =========>
-  pageSize : number = 7;
+  pageSize : number = 6;
   currentPage : number = 1;
   pages : number [] = [];
 
@@ -253,6 +257,43 @@ export class UsersListComponent {
     }
   }
   
+  exportTable (data : User [], format : 'pdf' | 'excel', fileName : string = 'Utilisateurs') {
+    if (!data || data.length === 0) {
+      console.error("NO DATA TO EXPORT !!!!");
+    }
+
+    const exportData = data.map (user => {
+      return {
+        Nom : user.name,
+        NNI : user.nni,
+        Telephone : user.tel,
+        Signals : user.signal
+      };
+    });
+
+    
+    if (format === 'excel') {
+      const workSheet : XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+      const workBook : XLSX.WorkBook = {
+        Sheets : {'Sheet 1' : workSheet},
+        SheetNames : ['Sheet 1']
+      };
+      
+      XLSX.writeFile(workBook, `${fileName}.xlsx`);
+    }
+    else if (format === 'pdf') {
+      const headers = Object.keys(exportData[0]);
+      const rows = exportData.map (user => headers.map (key => (user as any)[key]));
+      const doc = new jsPDF();
+
+      autoTable (doc, {
+        head : [headers],
+        body : rows,
+      });
+
+      doc.save(`${fileName}.pdf`);
+    }
+  }
 }
 
 

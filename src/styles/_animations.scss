@@ -1,18 +1,28 @@
-@mixin float($duration: 1s, $timing: ease-in-out, $delay: 0s) {
+@mixin float(
+    $name: float,
+    $duration: 1s,
+    $timing: ease-in-out,
+    $delay: 0s,
+    $top-start: 25%,
+    $top-end: 8rem,
+    $width-start: 250px,
+    $width-end: 80px
+    ) {
+    // Create dynamic keyframes
+    @keyframes #{$name} {
+        0% {
+        top: $top-start;
+        width: $width-start;
+        }
+        100% {
+        top: $top-end;
+        width: $width-end;
+        }
+    }
+
     z-index: 1;
     position: absolute;
-    animation: float $duration $timing $delay forwards;
-}
-
-@keyframes float {
-    0% {
-        top: 25%;
-        width: 250px;
-    }
-    100% {
-        top: 10rem;
-        width: 80px;
-    }
+    animation: #{$name} $duration $timing $delay forwards;
 }
 
 @mixin fade-in ($duration: 1s, $timing: ease-in-out, $delay: 0s) {

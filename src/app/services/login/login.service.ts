@@ -9,9 +9,14 @@ export class LoginService {
   private http = inject(HttpClient);
 
   private loginUrl = 'http://localhost:8000/api/loginAdmin'
+  private addAdminUrl = 'http://localhost:8000/api/ajouterAdmin'
 
-  login(password : string) {
-    return this.http.post<LoginResponce>(this.loginUrl, {password});
+  login(password : string, email : string) {
+    return this.http.post<LoginResponce>(this.loginUrl, {password, email});
   }
 
+
+  addAdmin (email : string, password : string) {
+    return this.http.post(this.addAdminUrl, {password, email});
+  }
 }

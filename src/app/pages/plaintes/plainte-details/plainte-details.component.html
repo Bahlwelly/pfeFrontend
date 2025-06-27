@@ -6,28 +6,40 @@
 
     <div class="body">
         <div class="general_infos">
-            <h4>Informations generales</h4>
-            @if (plainte) {
-                <p><span style="margin-right: 110px;">Code :</span> {{ plainte.code }} </p>
-                <p><span style="margin-right: 62px;">Description : </span>{{ plainte.details }} </p>
-                <p><span style="margin-right: 68px;">Commune :</span> {{ plainte.commune }} </p>
-                <p><span style="margin-right: 120px;">Etat :</span> {{ plainte.examiner }} </p>
+            <header>
+                <p> {{ plainte.code }} </p>
+                <p class="etat {{ plainte.etat.toLocaleLowerCase() === 'en cours' ? 'en_cours' : plainte.etat.toLocaleLowerCase() === 'en attente' ? 'en_attente' : plainte.etat.toLocaleLowerCase()}}"> {{ plainte.etat}} </p>
+            </header>
+            
+            <div class="image">
+                <img src="{{plainte.image}}">
+            </div>
 
-                <p [style]="plainte.valid == 'valid' ? 'background-color: #0fcc5e;' : 'background-color: #eb3a0e;'" class="label">{{ plainte.valid }}</p>
-            }
+            <div class="info">
+                <p> <span style="margin-right: -40px;">Description : </span> {{translateDetails(plainte.details)}} </p>
+                <p> <span style="margin-right: -40px;">Commune : </span> {{plainte.commune}} </p>
+                
+                @if (plainte.etat.toLowerCase() === 'valid' || plainte.etat.toLowerCase() === 'invalid') {
+                    <p> <span style="margin-right: 35px;">Rapport : </span> {{plainte.rapport}} </p>
+                }
+            </div>
         </div>
         
         <div class="user_infos">
-            <h4>Informations du Plaingnant</h4>
-            @if (user) {
-                <p><span style="margin-right: 78px;">Nom :</span> {{ user.name }} </p>
-                <p><span style="margin-right: 82px;">NNI : </span>{{ user.nni }} </p>
-                <p><span style="margin-right: 93px;">Tel : </span>{{ user.tel }} </p>
-
-                @if (user.blocquee == 'blocquee') {
-                    <p class="label">{{ user.blocquee }}</p>
+            <div class="user">
+                <h4>Plaingnant</h4>
+                <p><span style="margin-right: 120px;">Nom : </span> {{user.name}}</p>
+                <p><span style="margin-right: 80px;">Telephone : </span> {{user.tel}}</p>
+                <p><span style="margin-right: 15px;">Date de soumission  : </span> {{ dateCreation.split('T')[0] }}</p>
+            </div>
+            <div class="chef">
+                <h4>Inspecteur</h4>
+                <p><span style="margin-right: 106px;">Nom : </span> {{chef?.name || 'INDEFINIE'}}</p>
+                <p><span style="margin-right: 68px;">Telephone : </span> {{chef?.tel || 'INDEFINIE'}}</p>
+                @if (plainte.etat.toLocaleLowerCase() === 'valid' || plainte.etat.toLocaleLowerCase() === 'invalid') {
+                    <p><span style="margin-right: 15px;">Date d'inspection : </span> {{ dateInspection.split('T')[0] }}</p>
                 }
-            }
+            </div>
         </div>
     </div>
 </div>

@@ -1,20 +1,19 @@
 import { Component, inject, ViewChild, ViewContainerRef } from '@angular/core';
-import { AlertComponent } from '../alert/alert.component';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink, RouterModule, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../../services/login/login.service';
+import { AlertComponent } from '../alert/alert.component';
 import { LoadingComponent } from "../loading/loading.component";
 
-@Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterModule, LoadingComponent],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
-})
-export class LoginComponent {
 
+@Component({
+  selector: 'app-register',
+  standalone: true,
+  imports: [ReactiveFormsModule, LoadingComponent, RouterModule],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
+})
+export class RegisterComponent {
   // ================================================DECLARING THE ALERT COMPONENT==========================================================================
   @ViewChild('alert', {read : ViewContainerRef}) alert! : ViewContainerRef;
   
@@ -46,11 +45,12 @@ export class LoginComponent {
 
   // ===========================================DECLARING THE FORM AND APPLYING THE RULES ON THE INPUTS=====================================================
   private fb = inject(FormBuilder);
-  loginForm!: FormGroup;
+  registerForm!: FormGroup;
   
   constructor () {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       password: ['', [Validators.required]],
+      conf_password : ['', [Validators.required]],
       email : ['', [Validators.required, Validators.email]]
     });
   }
@@ -60,22 +60,27 @@ export class LoginComponent {
   isValid : boolean = true;
   private loginService = inject(LoginService);
   onSubmit () { 
-    if (this.loginForm.get('email')?.hasError('required')) {
+    if (this.registerForm.get('email')?.hasError('required')) {
       this.isValid = false;
-      this.showAlert('ERREUR !!', "L'email est requis pour se connecter.", 'error', true, true, false);
+      this.showAlert('ERREUR !!', "L'email est requis pour s'insecrir.", 'error', true, true, false);
     }
-    else if (this.loginForm.get('password')?.hasError('required')) {
+    else if (this.registerForm.get('password')?.hasError('required')) {
       this.isValid = false;
-      this.showAlert('ERREUR !!', 'Le mot de passe est requis pour se connecter.', 'error', true, true, false);
+      this.showAlert('ERREUR !!', "Le mot de passe est requis pour s'inscrir.", 'error', true, true, false);
+    }
+    else if (this.registerForm.get('conf_password')?.hasError('required')) {
+      this.isValid = false;
+      this.showAlert('ERREUR !!', 'Il faut confirmer le mot de pass pour inscrir.', 'error', true, true, false);
+    }
+    else if (this.registerForm.get('conf_password')?.value !== this.registerForm.get('password')?.value) {
+      this.isValid = false;
+      this.showAlert('ERREUR !!', 'Le mot de passe de confirmation ne correspond pas au mot de passe saisi.', 'error', true, true, false);
     }
     else {
-      const password = this.loginForm.get('password')?.value;
-      const email = this.loginForm.get('email')?.value;
-      this.loginService.login(password, email).subscribe({
-        next : (responce) =>  {
-          console.log(responce);
-          const token = responce.token;
-          sessionStorage.setItem('token', token);
+      const password = this.registerForm.get('password')?.value;
+      const email = this.registerForm.get('email')?.value;
+      this.loginService.addAdmin(email, password).subscribe({
+        next : () =>  {
           this.showAlert('SUCCESS', 'Bienvenue.', 'success', false, true, false);
           setTimeout (() => {
             this.redirectToHome();
@@ -95,6 +100,7 @@ export class LoginComponent {
   
   // ===========================================ADDING THE PASSWORD TOGGLE (SHOW / HIDE)=====================================================
   isPasswordVisible: boolean = false;
+
   togglePassword (passwordInput : HTMLInputElement) {
     if (passwordInput.type == 'password') {
       passwordInput.type = 'text';
@@ -108,6 +114,21 @@ export class LoginComponent {
     setTimeout(() => passwordInput.focus(), 0);
   }
   // ========================================================================================================================================
+  // ===========================================ADDING THE PASSWORD TOGGLE (SHOW / HIDE)=====================================================
+  isConfPasswordVisible: boolean = false;
+  toggleConfPassword (confPasswordInput : HTMLInputElement) {
+    if (confPasswordInput.type == 'password') {
+      confPasswordInput.type = 'text';
+      this.isConfPasswordVisible = true;
+    }
+    else {
+      confPasswordInput.type = 'password';
+      this.isConfPasswordVisible = false;
+    }
+
+    setTimeout(() => confPasswordInput.focus(), 0);
+  }
+  // ========================================================================================================================================
   
   
   // ========================================DECLARING THE REDIRECT FUNCTION==================================================
@@ -119,7 +140,7 @@ export class LoginComponent {
     this.isFading = true;
 
     setTimeout (() => {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }, 2000)
   }
   // =========================================================================================================================

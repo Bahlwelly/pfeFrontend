@@ -22,7 +22,7 @@ export class ListNoirComponent {
   }
 
   // PAGINATION METHODE =========>
-  pageSize : number = 7;
+  pageSize : number = 6;
   currentPage : number = 1;
   pages : number [] = [];
 
